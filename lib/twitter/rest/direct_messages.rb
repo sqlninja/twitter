@@ -228,7 +228,7 @@ module Twitter
       # @param text [String] The text of your direct message, up to 10,000 characters.
       # @param media_id [String] A media id from the object upload to twitter.
       # @param options [Hash] A customizable set of options.
-      def create_direct_message_event_with_media(user, text, media_id, options = {})
+      def create_direct_message_event_with_media_id(user, text, media_id, options = {})
         options = options.dup
         options[:event] = {type: 'message_create', message_create: {target: {recipient_id: extract_id(user)}, message_data: {text: text, attachment: {type: 'media', media: {id: media_id}}}}}
         response = Twitter::REST::Request.new(self, :json_post, '/1.1/direct_messages/events/new.json', options).perform
