@@ -3,7 +3,7 @@ require 'twitter/rest/request'
 module Twitter
   module REST
     module UploadUtils
-    private
+    
 
       # Uploads images and videos. Videos require multiple requests and uploads in chunks of 5 Megabytes.
       # The only supported video format is mp4.
@@ -15,7 +15,8 @@ module Twitter
 
         Twitter::REST::Request.new(self, :multipart_post, 'https://upload.twitter.com/1.1/media/upload.json', key: :media, file: media).perform
       end
-
+      
+      private
       # rubocop:disable MethodLength
       def chunk_upload(media, media_type, media_category)
         init = Twitter::REST::Request.new(self, :post, 'https://upload.twitter.com/1.1/media/upload.json',
