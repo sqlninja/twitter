@@ -14,7 +14,7 @@ module Twitter
 
     # @return [Integer]
     def patch
-      5
+      6
     end
 
     # @return [Integer, NilClass]
