@@ -184,12 +184,9 @@ module Twitter
       # @param user [Integer, String, Twitter::User] A Twitter user ID, screen name, URI, or object.
       # @param text [String] The text of your direct message, up to 10,000 characters.
       # @param options [Hash] A customizable set of options.
-      def create_direct_message_event(*args)
-        arguments = Twitter::Arguments.new(args)
-        options = arguments.options.dup
-        if arguments.length >= 2
-          options[:event] = {type: 'message_create', message_create: {target: {recipient_id: extract_id(arguments[0])}, message_data: {text: arguments[1]}}}
-        end
+      def create_direct_message_event(user, text)
+        options = options.dup
+        options[:event] = {type: 'message_create', message_create: {target: {recipient_id: extract_id(user)}, message_data: {text: text}}}
         response = Twitter::REST::Request.new(self, :json_post, '/1.1/direct_messages/events/new.json', options).perform
         Twitter::DirectMessageEvent.new(response[:event])
       end
