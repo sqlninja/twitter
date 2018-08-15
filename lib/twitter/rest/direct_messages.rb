@@ -188,7 +188,11 @@ module Twitter
         options = {}
         options[:event] = {type: 'message_create', message_create: {target: {recipient_id: extract_id(user)}, message_data: {text: text}}}
         response = Twitter::REST::Request.new(self, :json_post, '/1.1/direct_messages/events/new.json', options).perform
-        Twitter::DirectMessageEvent.new(response[:event])
+        if response.present?
+          Twitter::DirectMessageEvent.new(response[:event])
+        else
+          raise('Unable to send message, Twitter response object was empty')
+        end
       end
 
       # Create a new direct message event to the specified user from the authenticating user with media
@@ -209,9 +213,13 @@ module Twitter
         options = options.dup
         options[:event] = {type: 'message_create', message_create: {target: {recipient_id: extract_id(user)}, message_data: {text: text, attachment: {type: 'media', media: {id: media_id}}}}}
         response = Twitter::REST::Request.new(self, :json_post, '/1.1/direct_messages/events/new.json', options).perform
-        Twitter::DirectMessageEvent.new(response[:event])
+        if response.present?
+          Twitter::DirectMessageEvent.new(response[:event])
+        else
+          raise('Unable to send message, Twitter response object was empty')
+        end
       end
-      
+
       # Create a new direct message event to the specified user from the authenticating user with media_id from a media object already uploaded
       #
       # @see https://developer.twitter.com/en/docs/direct-messages/sending-and-receiving/api-reference/new-event
@@ -229,7 +237,11 @@ module Twitter
         options = options.dup
         options[:event] = {type: 'message_create', message_create: {target: {recipient_id: extract_id(user)}, message_data: {text: text, attachment: {type: 'media', media: {id: media_id}}}}}
         response = Twitter::REST::Request.new(self, :json_post, '/1.1/direct_messages/events/new.json', options).perform
-        Twitter::DirectMessageEvent.new(response[:event])
+        if response.present?
+          Twitter::DirectMessageEvent.new(response[:event])
+        else
+          raise('Unable to send message, Twitter response object was empty')
+        end
       end
 
     private
