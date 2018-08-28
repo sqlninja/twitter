@@ -17,10 +17,12 @@ module Twitter
       #
       # @see https://dev.twitter.com/rest/public/uploading-media
       def upload(media, media_category_prefix: 'tweet', shared: false)
-        return chunk_upload(media, 'video/mp4', "#{media_category_prefix}_video", shared) if File.extname(media) == '.mp4'
-        return chunk_upload(media, 'image/gif', "#{media_category_prefix}_gif", shared) if File.extname(media) == '.gif' && File.size(media) > 5_000_000
-
-        Twitter::REST::Request.new(self, :multipart_post, 'https://upload.twitter.com/1.1/media/upload.json', key: :media, file: media).perform
+        extension = File.extname(media).gsub('.', '')
+        media_type = 'image'
+        media_type = 'video' if extension == 'mp4'
+        media_type = 'gif' if extension == 'gif'
+        
+        return chunk_upload(media, "image/#{extension}", "#{media_category_prefix}_#{media_type}", shared)
       end
 
       private
