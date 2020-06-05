@@ -229,10 +229,10 @@ command:
 This library aims to support and is [tested against][travis] the following Ruby
 versions:
 
-* Ruby 2.3
 * Ruby 2.4
 * Ruby 2.5
-* JRuby 9.1.9.0
+* Ruby 2.6
+* Ruby 2.7
 
 If something doesn't work on one of these versions, it's a bug.
 
@@ -263,7 +263,7 @@ Constraint][pvc] with two digits of precision. For example:
 [pvc]: http://guides.rubygems.org/patterns/#pessimistic-version-constraint
 
 ## Copyright
-Copyright (c) 2006-2016 Erik Michaels-Ober, John Nunemaker, Wynn Netherland, Steve Richert, Steve Agalloco.
+Copyright (c) 2006-2016 Erik Berlin, John Nunemaker, Wynn Netherland, Steve Richert, Steve Agalloco.
 See [LICENSE][] for details.
 
 [license]: LICENSE.md

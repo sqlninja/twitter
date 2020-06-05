@@ -1,8 +1,12 @@
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.4
 
 Layout/AccessModifierIndentation:
   EnforcedStyle: outdent
+
+Layout/LineLength:
+  AllowURI: true
+  Enabled: false
 
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
@@ -18,10 +22,6 @@ Metrics/BlockLength:
 Metrics/BlockNesting:
   Max: 2
 
-Metrics/LineLength:
-  AllowURI: true
-  Enabled: false
-
 Metrics/MethodLength:
   CountComments: false
   Max: 10
@@ -30,7 +30,7 @@ Metrics/ModuleLength:
   Max: 150 # TODO: Lower to 100
 
 Metrics/ParameterLists:
-  Max: 4
+  Max: 5
   CountKeywordArgs: true
 
 Style/CollectionMethods:
