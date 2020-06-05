@@ -152,7 +152,10 @@ module Twitter
       # @overload destroy_direct_message(*ids)
       #   @param ids [Enumerable<Integer>] A collection of direct message IDs.
       def destroy_direct_message(*ids)
-        perform_requests(:delete, '/1.1/direct_messages/events/destroy.json', ids)
+        pmap(ids) do |id|
+          perform_requests(:delete, '/1.1/direct_messages/events/destroy.json', id: id)
+        end
+        nil
       end
 
       # Sends a new direct message to the specified user from the authenticating user
@@ -184,9 +187,10 @@ module Twitter
       # @param user [Integer, String, Twitter::User] A Twitter user ID, screen name, URI, or object.
       # @param text [String] The text of your direct message, up to 10,000 characters.
       # @param options [Hash] A customizable set of options.
-      def create_direct_message_event(user, text)
-        options = {}
-        options[:event] = {type: 'message_create', message_create: {target: {recipient_id: extract_id(user)}, message_data: {text: text}}}
+      def create_direct_message_event(*args)
+        arguments = Twitter::Arguments.new(args)
+        options = arguments.options.dup
+        options[:event] = {type: 'message_create', message_create: {target: {recipient_id: extract_id(arguments[0])}, message_data: {text: arguments[1]}}} if arguments.length >= 2
         response = Twitter::REST::Request.new(self, :json_post, '/1.1/direct_messages/events/new.json', options).perform
         if response.present?
           Twitter::DirectMessageEvent.new(response[:event])
